@@ -18,7 +18,7 @@ const app = express();
 const { NODE_ENV, PORT, DATABASE_URL, CLIENT_URL } = process.env;
 
 const isDevelopment = NODE_ENV === "development";
-const ACITVE_PORT = PORT || 8000;
+const ACTIVE_PORT = PORT || 8000;
 
 if (isDevelopment) {
 	app.use(morgan("dev"));
@@ -44,10 +44,10 @@ app.use("/api/v1/stories", authorize, storiesRoutes);
 app.use("/api/v1/tasks", authorize, tasksRoutes);
 
 if (NODE_ENV === "production") {
-	app.use(express.static(path.join(__dirname, "client/build")));
+	app.use(express.static(path.join(__dirname, "build")));
 
 	app.get("*", function (req, res) {
-		res.sendFile(path.join(__dirname, "client/build", "index.html"));
+		res.sendFile(path.join(__dirname, "build", "index.html"));
 	});
 }
 
@@ -59,7 +59,7 @@ mongoose
 		useUnifiedTopology: true,
 	})
 	.then(() => {
-		app.listen(ACITVE_PORT, () => {
+		app.listen(ACTIVE_PORT, () => {
 			console.log(`DB Connected and the server is running at PORT ${PORT}`);
 		});
 	})
