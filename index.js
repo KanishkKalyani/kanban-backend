@@ -12,6 +12,7 @@ const projectsRoutes = require("./server/routes/projects.routes");
 const featuresRoutes = require("./server/routes/features.routes");
 const storiesRoutes = require("./server/routes/stories.routes");
 const tasksRoutes = require("./server/routes/tasks.routes");
+const fileRoutes = require("./server/routes/image.routes");
 
 const app = express();
 
@@ -36,12 +37,15 @@ if (isDevelopment) {
 	app.use(cors({ origin: CLIENT_URL, optionsSuccessStatus: 200 }));
 }
 
+app.use("/uploads", express.static("server/uploads"));
+
 app.use("/api", kanbanRoutes);
 app.use("/api/v1/users", authorize, usersRoutes);
 app.use("/api/v1/projects", authorize, projectsRoutes);
 app.use("/api/v1/features", authorize, featuresRoutes);
 app.use("/api/v1/stories", authorize, storiesRoutes);
 app.use("/api/v1/tasks", authorize, tasksRoutes);
+app.use("/api/v1/files", fileRoutes);
 
 if (NODE_ENV === "production") {
 	app.use(express.static(path.join(__dirname, "build")));

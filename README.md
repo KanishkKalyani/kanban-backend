@@ -1,6 +1,6 @@
 # KANBAN BOARD
 
-## Hosted Link - https://kanishk-kanban.herokuapp.com/
+## Hosted Link - https://kanishk-kanban-app.herokuapp.com/
 
 ## Features:
 
@@ -104,6 +104,13 @@
     which you are registered with us.
 
 - Easy Navigation
+
   - Each page has clear arrows to go to and from one page to
     another. Also, the navigation bar has direct option to go to
     the Home Page.
+
+- Image Upload
+
+  - User can view, update and delete their profile pictures.
+    Clicking on profile picture will take user to the
+    profile-picture page.

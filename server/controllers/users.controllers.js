@@ -2,6 +2,9 @@ const jwt = require("jsonwebtoken");
 const _ = require("lodash");
 const nodemailer = require("nodemailer");
 const User = require("../models/users.model");
+const Logger = require("../utils/logger");
+
+const AuthLogger = new Logger("auth");
 
 // const transport = nodemailer.createTransport({
 // 	host: "smtp.mailtrap.io",
@@ -60,7 +63,7 @@ exports.signUp = (req, res) => {
 		      <h1>Please Use the following Link to activate the Account</h1>
 
 		      <a href="${activateLink}" target="_blank">
-				${activateLink}
+				CLICK TO ACTIVATE ACCOUNT
 		      </a>
 
 		      <hr/>
@@ -139,20 +142,29 @@ exports.activateAccount = (req, res) => {
 exports.signIn = (req, res) => {
 	const { email, password } = req.body;
 
+	AuthLogger.setLogData(email);
+	AuthLogger.info("Request Received at auth/sign-in", email);
+
 	User.findOne({ email }).exec((err, user) => {
 		if (err) {
+			AuthLogger.error("Something went wrong");
+
 			return res.status(400).json({
 				error: "Something went wrong",
 			});
 		}
 
 		if (!user) {
+			AuthLogger.error("User with the specified email does not exist.");
+
 			return res.status(400).json({
 				error: "User with the specified email does not exist.",
 			});
 		}
 
 		if (!user.authenticate(password)) {
+			AuthLogger.error("Incorrect Password");
+
 			return res.status(400).json({
 				error: "Incorrect Password",
 			});
@@ -210,7 +222,7 @@ exports.forgotPassword = (req, res) => {
 			html: `
             <h1>Please use the following link to reset password</h1>
 
-            <a href="${link}" target="_blank">${link}</a>
+            <a href="${link}" target="_blank">CLICK TO RESET PASSWORD</a>
 
             <p>This e-mail may contain sensitive information</p>
 
