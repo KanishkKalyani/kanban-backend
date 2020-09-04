@@ -34,7 +34,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 if (isDevelopment) {
 	app.use(cors());
 } else {
-	app.use(cors({ origin: CLIENT_URL, optionsSuccessStatus: 200 }));
+	app.use(cors({ origin: "*", optionsSuccessStatus: 200 }));
 }
 
 app.use("/uploads", express.static("server/uploads"));

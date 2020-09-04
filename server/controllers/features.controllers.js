@@ -16,7 +16,7 @@ exports.addFeature = (req, res) => {
 	Feature.findOne({ projectId, name }).exec((err, feature) => {
 		if (err) {
 			return res.status(400).json({
-				error: `Something went wrong 1 ${err}`,
+				error: `Something went wrong ${err}`,
 			});
 		}
 
@@ -29,12 +29,12 @@ exports.addFeature = (req, res) => {
 		newFeature.save((err, featureData) => {
 			if (err) {
 				return res.status(400).json({
-					error: `Something went wrong 2 ${err}`,
+					error: `Something went wrong ${err}`,
 				});
 			}
 
 			res.json({
-				message: `Hey, ${featureData.name} note saved in DB`,
+				message: `Hey, ${featureData.name} feature saved in DB`,
 				feature: featureData,
 			});
 		});
